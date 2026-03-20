@@ -3,15 +3,15 @@
 // OCR Service — Extract text from images using Google ML Kit Text Recognition
 //
 // Usage:
-//   final text = await OcrService.extractText(imagePath: '/path/to/image.jpg');
+//   final text = await OcrService.extractTextFromFile(imagePath: '/path/to/image.jpg');
 
 import 'dart:convert' show base64Decode;
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class OcrService {
-  static final _textRecognizer = GoogleMlKit.vision.textRecognizer();
+  static final _textRecognizer = TextRecognizer(script: ScriptType.latin);
 
   /// Extract text from an image file
   static Future<String> extractTextFromFile({required String imagePath}) async {
@@ -22,6 +22,7 @@ class OcrService {
       final extractedText = _formatRecognizedText(recognizedText);
       debugPrint('[OCR] Extracted ${extractedText.length} chars from image');
       
+      await inputImage.close();
       return extractedText;
     } catch (e) {
       debugPrint('[OCR] Error: $e');

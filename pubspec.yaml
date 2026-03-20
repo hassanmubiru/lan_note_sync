@@ -80,8 +80,8 @@ dependencies:
   # QR generation
   qr_flutter: ^4.1.0
 
-  # OCR - Google ML Kit
-  google_ml_kit: ^0.21.0
+  # OCR - Google ML Kit (Text Recognition)
+  google_mlkit_text_recognition: ^0.12.0
 
   # Utilities
   uuid: ^4.4.0
