@@ -1,0 +1,100 @@
+name: lan_note_sync
+description: "LanNote Sync — Zero-cloud, P2P-encrypted notes. No accounts. No tracking."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+
+  # Local Network Discovery
+  bonsoir: ^6.0.1
+
+  # Web P2P
+  flutter_webrtc: ^0.10.9
+  socket_io_client: ^2.0.3
+
+  # Storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.3
+  flutter_secure_storage: ^9.2.2
+
+  # Cryptography
+  cryptography: ^2.7.0
+  pointycastle: ^3.9.1
+  convert: ^3.1.1
+
+  # HTTP Server
+  shelf: ^1.4.1
+  shelf_router: ^1.1.4
+  shelf_web_socket: ^1.0.4
+  web_socket_channel: ^3.0.0
+  http: ^1.2.1
+
+  # Permissions
+  permission_handler: ^11.3.1
+
+  # Hardware Sensors (shake detection)
+  sensors_plus: ^5.0.0
+  vibration: ^1.9.0
+
+  # NFC
+  nfc_manager: ^3.5.0
+
+  # Camera / QR / AR Whiteboard
+  mobile_scanner: ^5.2.3
+  camera: ^0.11.0
+  image_picker: ^1.1.2
+
+  # Voice / Speech
+  speech_to_text: ^6.6.2
+  record: ^5.1.1
+  just_audio: ^0.9.40
+
+  # Network Info
+  network_info_plus: ^6.0.0
+  connectivity_plus: ^6.0.3
+  device_info_plus: ^10.1.0
+
+  # In-App Purchases (RevenueCat)
+  purchases_flutter: ^7.9.0
+
+  # Markdown
+  flutter_markdown: ^0.7.3
+
+  # Animations & UI
+  lottie: ^3.1.2
+  flutter_animate: ^4.5.0
+  confetti: ^0.7.0
+
+  # Routing
+  go_router: ^14.2.0
+
+  # QR generation
+  qr_flutter: ^4.1.0
+
+  # Utilities
+  uuid: ^4.4.0
+  intl: ^0.19.0
+  share_plus: ^10.0.2
+  url_launcher: ^6.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.11
+  hive_generator: ^2.0.1
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/animations/
+    - assets/images/

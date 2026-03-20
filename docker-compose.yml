@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  # WebRTC Signaling Server
+  signaling:
+    build:
+      context: ./signaling_server
+      dockerfile: Dockerfile
+    container_name: lannote-signaling
+    ports:
+      - "3031:3031"
+    environment:
+      - PORT=3031
+      - CORS_ORIGIN=*
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3031/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    networks:
+      - lannote-net
+
+  # Flutter web app (pre-built)
+  # Build first: flutter build web --release
+  flutter-web:
+    image: nginx:alpine
+    container_name: lannote-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./build/web:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - signaling
+    restart: unless-stopped
+    networks:
+      - lannote-net
+
+networks:
+  lannote-net:
+    driver: bridge

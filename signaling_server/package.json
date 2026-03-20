@@ -1,0 +1,20 @@
+{
+  "name": "lan-note-sync-signaling",
+  "version": "1.0.0",
+  "description": "WebRTC signaling server for LanNote Sync web clients",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "docker": "docker build -t lannote-signaling . && docker run -p 3031:3031 lannote-signaling"
+  },
+  "dependencies": {
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
