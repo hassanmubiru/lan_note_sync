@@ -17,54 +17,54 @@ dependencies:
   bonsoir: ^6.0.1
 
   # Web P2P
-  flutter_webrtc: ^0.10.9
-  socket_io_client: ^2.0.3
+  flutter_webrtc: ^1.4.0
+  socket_io_client: ^3.1.4
 
   # Storage
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path_provider: ^2.1.3
-  flutter_secure_storage: ^9.2.2
+  flutter_secure_storage: ^10.0.0
 
   # Cryptography
   cryptography: ^2.7.0
-  pointycastle: ^3.9.1
+  pointycastle: ^4.0.0
   convert: ^3.1.1
 
   # HTTP Server
   shelf: ^1.4.1
   shelf_router: ^1.1.4
-  shelf_web_socket: ^1.0.4
+  shelf_web_socket: ^2.0.1
   web_socket_channel: ^3.0.0
   http: ^1.2.1
 
   # Permissions
-  permission_handler: ^11.3.1
+  permission_handler: ^12.0.1
 
   # Hardware Sensors (shake detection)
-  sensors_plus: ^5.0.0
-  vibration: ^1.9.0
+  sensors_plus: ^7.0.0
+  vibration: ^3.1.8
 
   # NFC
-  nfc_manager: ^3.5.0
+  nfc_manager: ^4.1.1
 
   # Camera / QR / AR Whiteboard
-  mobile_scanner: ^5.2.3
-  camera: ^0.11.0
+  mobile_scanner: ^7.2.0
+  camera: ^0.12.0+1
   image_picker: ^1.1.2
 
   # Voice / Speech
-  speech_to_text: ^6.6.2
-  record: ^5.1.1
-  just_audio: ^0.9.40
+  speech_to_text: ^7.3.0
+  record: ^6.2.0
+  just_audio: ^0.10.5
 
   # Network Info
-  network_info_plus: ^6.0.0
-  connectivity_plus: ^6.0.3
-  device_info_plus: ^10.1.0
+  network_info_plus: ^7.0.0
+  connectivity_plus: ^7.0.0
+  device_info_plus: ^12.3.0
 
   # In-App Purchases (RevenueCat)
-  purchases_flutter: ^7.9.0
+  purchases_flutter: ^9.15.0
 
   # Markdown
   flutter_markdown: ^0.7.3
@@ -72,18 +72,21 @@ dependencies:
   # Animations & UI
   lottie: ^3.1.2
   flutter_animate: ^4.5.0
-  confetti: ^0.7.0
+  confetti: ^0.8.0
 
   # Routing
-  go_router: ^14.2.0
+  go_router: ^17.1.0
 
   # QR generation
   qr_flutter: ^4.1.0
 
+  # OCR - Google ML Kit
+  google_ml_kit: ^0.21.0
+
   # Utilities
   uuid: ^4.4.0
-  intl: ^0.19.0
-  share_plus: ^10.0.2
+  intl: ^0.20.2
+  share_plus: ^12.0.1
   url_launcher: ^6.3.0
 
 dev_dependencies:
@@ -91,7 +94,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.4.11
   hive_generator: ^2.0.1
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true

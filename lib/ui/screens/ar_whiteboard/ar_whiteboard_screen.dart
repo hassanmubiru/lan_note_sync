@@ -10,6 +10,7 @@ import '../../../core/constants.dart';
 import '../../../models/note.dart';
 import '../../../providers/notes_provider.dart';
 import '../../../providers/purchase_provider.dart';
+import '../../../services/ocr/ocr_service.dart';
 
 class ArWhiteboardScreen extends ConsumerStatefulWidget {
   const ArWhiteboardScreen({super.key});
@@ -83,17 +84,25 @@ class _ArWhiteboardScreenState extends ConsumerState<ArWhiteboardScreen> {
       _isProcessing = true;
     });
 
-    // Simulate whiteboard text extraction (replace with real OCR in production)
-    await Future.delayed(const Duration(milliseconds: 1800));
-    setState(() {
-      _recognizedText = '# Whiteboard Capture\n\n'
-          'Text extracted from whiteboard.\n\n'
-          '**Action Items:**\n'
-          '- [ ] Item 1\n'
-          '- [ ] Item 2\n\n'
-          '*Edit this text to add your notes.*';
-      _isProcessing = false;
-    });
+    // Extract text from image using OCR
+    try {
+      final extractedText = await OcrService.extractTextFromFile(imagePath: file.path);
+      setState(() {
+        _recognizedText = extractedText;
+        _isProcessing = false;
+      });
+    } catch (e) {
+      debugPrint('[AR] OCR error: $e');
+      setState(() {
+        _recognizedText = '# Whiteboard Capture\n\nFailed to extract text. Please edit manually.';
+        _isProcessing = false;
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('OCR error: $e'), backgroundColor: Colors.red),
+        );
+      }
+    }
   }
 
   Future<void> _fromGallery() async {
@@ -106,11 +115,26 @@ class _ArWhiteboardScreenState extends ConsumerState<ArWhiteboardScreen> {
       _step = _CaptureStep.preview;
       _isProcessing = true;
     });
-    await Future.delayed(const Duration(milliseconds: 1500));
-    setState(() {
-      _recognizedText = '# Gallery Image\n\nEdit this to add your notes.';
-      _isProcessing = false;
-    });
+
+    // Extract text from image using OCR
+    try {
+      final extractedText = await OcrService.extractTextFromFile(imagePath: file.path);
+      setState(() {
+        _recognizedText = extractedText;
+        _isProcessing = false;
+      });
+    } catch (e) {
+      debugPrint('[AR] OCR error: $e');
+      setState(() {
+        _recognizedText = '# Gallery Image\n\nFailed to extract text. Please edit manually.';
+        _isProcessing = false;
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('OCR error: $e'), backgroundColor: Colors.red),
+        );
+      }
+    }
   }
 
   Future<void> _createNote() async {

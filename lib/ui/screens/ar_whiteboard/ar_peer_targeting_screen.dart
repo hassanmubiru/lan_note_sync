@@ -10,6 +10,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 import '../../../core/constants.dart';
 import '../../../models/peer.dart';
 import '../../../services/ar_peer_targeting.dart';
@@ -425,11 +427,51 @@ class _LockedPeerCard extends StatelessWidget {
 
 // ─── My QR sheet ──────────────────────────────────────────────────────────────
 
-class _MyQrSheet extends ConsumerWidget {
+class _MyQrSheet extends ConsumerStatefulWidget {
   const _MyQrSheet();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_MyQrSheet> createState() => _MyQrSheetState();
+}
+
+class _MyQrSheetState extends ConsumerState<_MyQrSheet> {
+  String? _qrString;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadQrString();
+  }
+
+  Future<void> _loadQrString() async {
+    try {
+      final networkInfo = NetworkInfoPlus();
+      final hostIp = await networkInfo.getWifiIP();
+      
+      if (hostIp == null) {
+        throw Exception('No WiFi connection detected');
+      }
+      
+      final qr = await ArPeerTargeting.generateMyQrString(myHost: hostIp);
+      if (mounted) {
+        setState(() {
+          _qrString = qr;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to generate QR: $e'), backgroundColor: Colors.red),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(24),
@@ -446,22 +488,78 @@ class _MyQrSheet extends ConsumerWidget {
           const Text('Let peers scan this to connect',
               style: TextStyle(color: Colors.grey)),
           const SizedBox(height: 20),
-          // QR placeholder — in production use ArPeerTargeting.generateMyQrString()
-          Container(
-            width: 200, height: 200,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primary, width: 2),
-              borderRadius: BorderRadius.circular(12),
+          if (_isLoading)
+            Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.primary.withOpacity(0.5), width: 2),
+                borderRadius: BorderRadius.circular(12),
+                color: Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05),
+              ),
+              child: const Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+            )
+          else if (_qrString != null)
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.primary, width: 2),
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+              ),
+              child: QrImage(
+                data: _qrString!,
+                size: 200,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                errorCorrectionLevel: QrErrorCorrectLevel.H,
+              ),
+            )
+          else
+            Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red.withOpacity(0.5), width: 2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Center(
+                child: Text('Failed to generate QR', textAlign: TextAlign.center),
+              ),
             ),
-            child: const Center(
-              child: Icon(Icons.qr_code_2, size: 120, color: AppColors.primary),
-            ),
-          ),
           const SizedBox(height: 16),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
+          if (_qrString != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: _qrString!));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('QR code copied to clipboard')),
+                    );
+                  },
+                  icon: const Icon(Icons.copy, size: 16),
+                  label: const Text('Copy Code'),
+                ),
+                const SizedBox(width: 8),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Close'),
+                ),
+              ],
+            )
+          else
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Close'),
+            ),
         ],
       ),
     );
