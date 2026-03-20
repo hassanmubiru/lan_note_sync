@@ -493,9 +493,9 @@ class _MyQrSheetState extends ConsumerState<_MyQrSheet> {
               width: 200,
               height: 200,
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.primary.withOpacity(0.5), width: 2),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.5), width: 2),
                 borderRadius: BorderRadius.circular(12),
-                color: Theme.of(context).colorScheme.inverseSurface.withOpacity(0.05),
+                color: Theme.of(context).colorScheme.inverseSurface.withValues(alpha: 0.05),
               ),
               child: const Center(
                 child: SizedBox(
@@ -515,10 +515,9 @@ class _MyQrSheetState extends ConsumerState<_MyQrSheet> {
               ),
               child: QrImage(
                 data: _qrString!,
-                size: 200,
+                size: 200.0,
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
-                errorCorrectionLevel: QrErrorCorrectLevel.H,
               ),
             )
           else
@@ -526,7 +525,7 @@ class _MyQrSheetState extends ConsumerState<_MyQrSheet> {
               width: 200,
               height: 200,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.red.withOpacity(0.5), width: 2),
+                border: Border.all(color: Colors.red.withValues(alpha: 0.5), width: 2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Center(
