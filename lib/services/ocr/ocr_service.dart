@@ -11,7 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class OcrService {
-  static final _textRecognizer = TextRecognizer(script: ScriptType.latin);
+  static final _textRecognizer = TextRecognizer();
 
   /// Extract text from an image file
   static Future<String> extractTextFromFile({required String imagePath}) async {
@@ -22,7 +22,6 @@ class OcrService {
       final extractedText = _formatRecognizedText(recognizedText);
       debugPrint('[OCR] Extracted ${extractedText.length} chars from image');
       
-      await inputImage.close();
       return extractedText;
     } catch (e) {
       debugPrint('[OCR] Error: $e');
