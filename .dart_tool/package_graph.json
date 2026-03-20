@@ -185,6 +185,14 @@
       ]
     },
     {
+      "name": "google_mlkit_text_recognition",
+      "version": "0.12.1",
+      "dependencies": [
+        "flutter",
+        "google_mlkit_commons"
+      ]
+    },
+    {
       "name": "qr_flutter",
       "version": "4.1.0",
       "dependencies": [
@@ -1091,6 +1099,13 @@
       "dependencies": []
     },
     {
+      "name": "google_mlkit_commons",
+      "version": "0.7.1",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
       "name": "qr",
       "version": "3.0.2",
       "dependencies": [
@@ -1937,21 +1952,6 @@
       "dependencies": [
         "collection",
         "meta"
-      ]
-    },
-    {
-      "name": "google_mlkit_text_recognition",
-      "version": "0.12.1",
-      "dependencies": [
-        "flutter",
-        "google_mlkit_commons"
-      ]
-    },
-    {
-      "name": "google_mlkit_commons",
-      "version": "0.7.1",
-      "dependencies": [
-        "flutter"
       ]
     }
   ],
