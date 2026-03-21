@@ -294,7 +294,9 @@ class _TabLabel extends StatelessWidget {
     children: [
       Icon(icon, size: 15),
       const SizedBox(width: 4),
-      Text(label, style: const TextStyle(fontSize: 12)),
+      Flexible(
+        child: Text(label, style: const TextStyle(fontSize: 12), overflow: TextOverflow.ellipsis),
+      ),
       if (badge != null) ...[
         const SizedBox(width: 4),
         Container(
