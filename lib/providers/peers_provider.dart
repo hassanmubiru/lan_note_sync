@@ -32,9 +32,9 @@ final mdnsServiceProvider = Provider<MdnsService?>((ref) {
   return service;
 });
 
-final webRtcServiceProvider = Provider<WebRtcService?>((ref) {
+final webRtcServiceProvider = Provider<WebRTCService?>((ref) {
   if (!kIsWeb) return null;
-  final service = WebRtcService(
+  final service = WebRTCService(
     onNotesReceived: (notes, sourceId) {
       ref.read(notesProvider.notifier).mergeIncoming(notes, sourceId);
     },

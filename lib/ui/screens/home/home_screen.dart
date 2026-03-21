@@ -59,7 +59,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 snap: true,
                 expandedHeight: 100,
                 flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.fade,
+                  collapseMode: CollapseMode.parallax,
                   background: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
                 ),
                 title: innerBoxScrolled
