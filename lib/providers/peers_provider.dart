@@ -56,9 +56,10 @@ final networkInitProvider = FutureProvider<bool>((ref) async {
     await mdns?.startBroadcasting();
     await mdns?.startDiscovery();
   } else {
-    final url = HiveService.getSetting<String>('signaling_url')
-        ?? AppConstants.defaultSignalingUrl;
-    await ref.read(webRtcServiceProvider)?.connect(url);
+    // WebRTC disabled for now
+    // final url = HiveService.getSetting<String>('signaling_url')
+    //     ?? AppConstants.defaultSignalingUrl;
+    // await ref.read(webRtcServiceProvider)?.connect(url);
   }
   return true;
 });
