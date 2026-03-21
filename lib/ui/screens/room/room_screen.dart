@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants.dart';
+import '../../../models/note.dart';
 import '../../../models/peer.dart';
 import '../../../models/room.dart';
 import '../../../providers/room_provider.dart';
@@ -20,7 +21,7 @@ class RoomScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final roomState = ref.watch(roomProvider);
     final peers = ref.watch(peersProvider).maybeWhen(data: (p) => p, orElse: () => <DiscoveredPeer>[]);
-    final notes = ref.watch(notesProvider).maybeWhen(data: (n) => n, orElse: () => <DiscoveredPeer>[]);
+    final notes = ref.watch(notesProvider).maybeWhen(data: (n) => n, orElse: () => <Note>[]);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
