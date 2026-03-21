@@ -68,8 +68,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                           decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(6)),
                           child: const Icon(Icons.sync_alt, color: Colors.white, size: 14)),
                         const SizedBox(width: 8),
-                        Text(AppStrings.appName, style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w700, color: AppColors.primary)),
+                        Flexible(
+                          child: Text(AppStrings.appName, style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w700, color: AppColors.primary),
+                            overflow: TextOverflow.ellipsis),
+                        ),
                       ])
                     : null,
                 actions: [
