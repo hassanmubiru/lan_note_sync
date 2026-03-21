@@ -65,22 +65,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      child: const Icon(Icons.note_alt_rounded, color: Colors.white, size: 16),
+                      child: const Icon(Icons.note_alt_rounded, color: Colors.white, size: 14),
                     ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      'LanNote Sync',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        color: AppColors.primary,
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        'LanNote Sync',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          color: AppColors.primary,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
