@@ -60,35 +60,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 expandedHeight: 56,
                 leading: const SizedBox.shrink(),
                 centerTitle: false,
-                titleSpacing: 16,
-                title: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
+                titleSpacing: 8,
+                title: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Icon(Icons.note_alt_rounded, color: Colors.white, size: 14),
+                    ),
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        'LanNote Sync',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
                           color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Icon(Icons.note_alt_rounded, color: Colors.white, size: 14),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      const SizedBox(width: 6),
-                      Flexible(
-                        child: Text(
-                          'LanNote Sync',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: AppColors.primary,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 actions: [
                   IconButton(icon: const Icon(Icons.nfc_rounded), tooltip: 'NFC', onPressed: () => _showNfcSheet(context)),
