@@ -75,6 +75,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                   IconButton(icon: const Icon(Icons.document_scanner_outlined), tooltip: 'AR', onPressed: () => context.push('/ar')),
                   IconButton(icon: const Icon(Icons.settings_outlined), onPressed: () => context.push('/settings')),
                 ],
+              ),
+              SliverToBoxAdapter(
+                child: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
+              ),
+              SliverAppBar(
+                floating: true,
+                snap: true,
+                expandedHeight: 48,
+                backgroundColor: theme.colorScheme.surface,
+                toolbarHeight: 0,
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(48),
                   child: Container(
