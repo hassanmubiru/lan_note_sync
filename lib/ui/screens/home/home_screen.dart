@@ -60,14 +60,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 expandedHeight: 100,
                 centerTitle: false,
                 automaticallyImplyLeading: false,
-                titleSpacing: 16,
+                toolbarHeight: 56,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
                 ),
                 title: innerBoxScrolled
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 8),
+                    ? Container(
+                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
                         child: Text(AppStrings.appName, style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w700, color: AppColors.primary),
                           overflow: TextOverflow.ellipsis,
