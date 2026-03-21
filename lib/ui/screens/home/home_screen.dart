@@ -94,17 +94,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 ),
               ),
             ],
-            body: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
-                ),
-                SliverToBoxAdapter(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SecurityBadgeRow(),
-                        if (syncState.status != SyncStatus.idle) SyncStatusBar(syncState: syncState),
+            body: Column(
+              children: [
+                _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
+                const SecurityBadgeRow(),
+                if (syncState.status != SyncStatus.idle) SyncStatusBar(syncState: syncState),
                 if (_currentTab == 1)
                   ShakeBanner(onShake: () => _onShake(context, ref), peerCount: peers.length),
                 if (_currentTab == 2 && roomState.currentRoom != null)
