@@ -50,7 +50,7 @@ class AppTheme {
       ),
 
       // ── Card ─────────────────────────────────────────────────────────────
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: isDark ? const Color(0xFF1A2235) : Colors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -99,7 +99,7 @@ class AppTheme {
       ),
 
       // ── Tab bar ───────────────────────────────────────────────────────────
-      tabBarTheme: TabBarTheme(
+      tabBarTheme: TabBarThemeData(
         labelColor: AppColors.primary,
         unselectedLabelColor: isDark ? Colors.white38 : Colors.grey[500],
         dividerColor: Colors.transparent,
@@ -196,7 +196,7 @@ class AppTheme {
       ),
 
       // ── Dialog ────────────────────────────────────────────────────────────
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: isDark ? const Color(0xFF141929) : Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 16,

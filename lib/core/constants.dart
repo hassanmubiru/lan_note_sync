@@ -131,6 +131,10 @@ class AppStrings {
   static const String nearby   = 'Nearby';
   static const String rooms    = 'Rooms';
 
+  // Note editor
+  static const String titleHint   = 'Note title';
+  static const String contentHint = 'Start typing... or paste content';
+
   // Room mode
   static const String roomAutoJoined  = 'Auto-joined room';
   static const String roomEmpty       = 'No rooms detected nearby.\nChange WiFi networks to auto-join.';
