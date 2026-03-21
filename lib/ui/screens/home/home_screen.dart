@@ -67,14 +67,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                   collapseMode: CollapseMode.parallax,
                   background: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
                 ),
-                title: innerBoxScrolled
-                    ? Text(AppStrings.appName, 
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w700, color: AppColors.primary),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: false)
-                    : null,
+                title: innerBoxScrolled ? const Text(
+                  'LanNote Sync',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                    color: AppColors.primary,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ) : null,
                 actions: [
                   IconButton(icon: const Icon(Icons.nfc_rounded), tooltip: 'NFC', onPressed: () => _showNfcSheet(context)),
                   IconButton(icon: const Icon(Icons.document_scanner_outlined), tooltip: 'AR', onPressed: () => context.push('/ar')),
