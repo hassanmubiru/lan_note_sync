@@ -61,14 +61,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 leading: const SizedBox.shrink(),
                 centerTitle: false,
                 titleSpacing: 16,
-                title: const Text(
-                  'LanNote Sync',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                    color: AppColors.primary,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+                title: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: const Icon(Icons.note_alt_rounded, color: Colors.white, size: 16),
+                    ),
+                    const SizedBox(width: 8),
+                    const Text(
+                      'LanNote Sync',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: AppColors.primary,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
                 actions: [
                   IconButton(icon: const Icon(Icons.nfc_rounded), tooltip: 'NFC', onPressed: () => _showNfcSheet(context)),
