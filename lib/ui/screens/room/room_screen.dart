@@ -198,7 +198,7 @@ class RoomScreen extends ConsumerWidget {
 
   void _shareAllToRoom(BuildContext context, WidgetRef ref, List peers) {
     if (peers.isEmpty) return;
-    final notes = ref.read(notesProvider).maybeWhen(data: (n) => n, orElse: () => <DiscoveredPeer>[]);
+    final notes = ref.read(notesProvider).maybeWhen(data: (n) => n, orElse: () => <Note>[]);
     for (final peer in peers) {
       ref.read(syncStateProvider.notifier).shareNotesWith(peer, notes);
     }
