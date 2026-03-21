@@ -62,7 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 leading: const SizedBox.shrink(),
                 leadingWidth: 0,
                 centerTitle: false,
-                titleSpacing: 0,
+                titleSpacing: 8,
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
