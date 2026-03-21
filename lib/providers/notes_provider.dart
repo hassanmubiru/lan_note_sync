@@ -145,7 +145,7 @@ final allTagsProvider = Provider<List<String>>((ref) {
       }
       return tags.toList()..sort();
     },
-    orElse: () => <Note>[],
+    orElse: () => <String>[],
   );
 });
 
