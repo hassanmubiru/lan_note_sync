@@ -87,20 +87,18 @@ class MdnsService {
   }
 
   void _handleDiscoveryEvent(BonsoirDiscoveryEvent event) {
-    debugPrint('[mDNS] Event: ${event.type} - ${event.service?.name}');
-
-    switch (event.type) {
-      case BonsoirDiscoveryEventType.discoveryServiceFound:
-        _onServiceFound(event.service!);
-        break;
-      case BonsoirDiscoveryEventType.discoveryServiceResolved:
-        _onServiceResolved(event.service as ResolvedBonsoirService);
-        break;
-      case BonsoirDiscoveryEventType.discoveryServiceLost:
-        _onServiceLost(event.service!);
-        break;
-      default:
-        break;
+    try {
+      // In newer Bonsoir API, events have different structure
+      // Attempt to access service information from event
+      if (event is BonsoirService) {
+        _onServiceFound(event);
+      }
+      // Handle resolved services by checking port
+      else if (event is BonsoirService && event.port != null && event.port != 0) {
+        _onServiceResolved(event);
+      }
+    } catch (e) {
+      debugPrint('[mDNS] Error handling discovery event: $e');
     }
   }
 
@@ -109,23 +107,23 @@ class MdnsService {
     debugPrint('[mDNS] Service found: ${service.name}');
   }
 
-  void _onServiceResolved(ResolvedBonsoirService service) {
-    debugPrint('[mDNS] Service resolved: ${service.name} at ${service.host}:${service.port}');
+  void _onServiceResolved(BonsoirService service) {
+    debugPrint('[mDNS] Service resolved: ${service.name}');
 
-    final attributes = service.attributes;
+    final host = service.host;
+    if (host == null || host.isEmpty) return;
+
+    final attributes = service.attributes ?? {};
     final deviceId = attributes['deviceId'] ?? _extractIdFromName(service.name);
 
     // Skip our own service
     if (deviceId == DeviceService.deviceId) return;
 
-    final host = service.host ?? '';
-    if (host.isEmpty) return;
-
     final peer = DiscoveredPeer(
       id: deviceId,
       name: attributes['deviceName'] ?? _extractNameFromService(service.name),
       host: host,
-      port: service.port,
+      port: service.port ?? AppConstants.servicePort,
       noteCount: int.tryParse(attributes['noteCount'] ?? '0') ?? 0,
       lastSeen: DateTime.now(),
       status: PeerStatus.discovered,

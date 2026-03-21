@@ -19,7 +19,7 @@ class _SkeletonBox extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: isDark ? Colors.white10 : Colors.black08,
+        color: isDark ? Colors.white10 : Colors.black12,
         borderRadius: borderRadius ?? BorderRadius.circular(4),
       ),
     )
