@@ -32,21 +32,20 @@ final mdnsServiceProvider = Provider<MdnsService?>((ref) {
   return service;
 });
 
-final webRtcServiceProvider = Provider<WebRTCService?>((ref) {
-  if (!kIsWeb) return null;
-  final service = WebRTCService(
-    onNotesReceived: (notes, sourceId) {
-      ref.read(notesProvider.notifier).mergeIncoming(notes, sourceId);
-    },
-  );
-  ref.onDispose(() => service.dispose());
-  return service;
-});
+// TODO: Re-enable WebRTC support - API updated in newer versions
+// final webRtcServiceProvider = Provider<WebRTCService?>((ref) {
+//   if (!kIsWeb) return null;
+//   final service = WebRTCService(
+//     signalingUrl: AppConstants.defaultSignalingUrl,
+//   );
+//   ref.onDispose(() => service.dispose());
+//   return service;
+// });
 
 final syncServiceProvider = Provider<SyncService>((ref) {
   return SyncService(
     httpServer: ref.watch(httpServerProvider),
-    webRtcService: ref.watch(webRtcServiceProvider),
+    webRtcService: null, // WebRTC disabled - ref.watch(webRtcServiceProvider),
   );
 });
 
@@ -79,16 +78,8 @@ class PeersNotifier extends AsyncNotifier<List<DiscoveredPeer>> {
         ref.onDispose(() => _sub?.cancel());
         return mdns.currentPeers;
       }
-    } else {
-      final webRtc = ref.watch(webRtcServiceProvider);
-      if (webRtc != null) {
-        _sub = webRtc.peersStream.listen((peers) {
-          state = AsyncData(peers);
-        });
-        ref.onDispose(() => _sub?.cancel());
-        return webRtc.currentPeers;
-      }
     }
+    // WebRTC disabled for now
     return [];
   }
 
@@ -102,7 +93,8 @@ class PeersNotifier extends AsyncNotifier<List<DiscoveredPeer>> {
       await Future.delayed(const Duration(seconds: 2));
       state = AsyncData(mdns?.currentPeers ?? []);
     } else {
-      state = AsyncData(ref.read(webRtcServiceProvider)?.currentPeers ?? []);
+      // WebRTC disabled for now
+      state = const AsyncData([]);
     }
   }
 
