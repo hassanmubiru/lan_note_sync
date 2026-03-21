@@ -12,15 +12,18 @@ class SecurityBadgeRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: compact ? 4 : 6, horizontal: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _Badge(AppStrings.badge_e2ee, AppColors.primary),
-          _Divider(),
-          _Badge(AppStrings.badge_offline, AppColors.success),
-          _Divider(),
-          _Badge(AppStrings.badge_notrack, AppColors.secondary),
-        ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _Badge(AppStrings.badge_e2ee, AppColors.primary),
+            _Divider(),
+            _Badge(AppStrings.badge_offline, AppColors.success),
+            _Divider(),
+            _Badge(AppStrings.badge_notrack, AppColors.secondary),
+          ],
+        ),
       ),
     );
   }
