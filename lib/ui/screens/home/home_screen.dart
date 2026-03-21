@@ -57,14 +57,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
               SliverAppBar(
                 floating: true,
                 snap: true,
-                expandedHeight: 100,
+                expandedHeight: 56,
                 leading: const SizedBox.shrink(),
                 centerTitle: false,
                 titleSpacing: 16,
-                flexibleSpace: !innerBoxScrolled ? FlexibleSpaceBar(
-                  collapseMode: CollapseMode.parallax,
-                  background: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
-                ) : null,
                 title: const Text(
                   'LanNote Sync',
                   style: TextStyle(
