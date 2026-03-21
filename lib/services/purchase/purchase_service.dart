@@ -130,7 +130,9 @@ class PurchaseService {
       final products = await Purchases.getProducts([productId]);
       if (products.isEmpty) return false;
 
-      final customerInfo = await Purchases.purchaseStoreProduct(products.first);
+      final purchaseResult = await Purchases.purchaseStoreProduct(products.first);
+      // In newer API, PurchaseResult contains customerInfo
+      final customerInfo = purchaseResult.customerInfo;
       _status = _buildStatus(customerInfo);
       await HiveService.setSetting('iap_tier', _status.tier.name);
       return true;

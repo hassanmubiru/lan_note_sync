@@ -74,7 +74,7 @@ class PeersNotifier extends AsyncNotifier<List<DiscoveredPeer>> {
       final mdns = ref.watch(mdnsServiceProvider);
       if (mdns != null) {
         _sub = mdns.peersStream.listen((peers) {
-          if (mounted) state = AsyncData(peers);
+          state = AsyncData(peers);
         });
         ref.onDispose(() => _sub?.cancel());
         return mdns.currentPeers;
@@ -83,7 +83,7 @@ class PeersNotifier extends AsyncNotifier<List<DiscoveredPeer>> {
       final webRtc = ref.watch(webRtcServiceProvider);
       if (webRtc != null) {
         _sub = webRtc.peersStream.listen((peers) {
-          if (mounted) state = AsyncData(peers);
+          state = AsyncData(peers);
         });
         ref.onDispose(() => _sub?.cancel());
         return webRtc.currentPeers;

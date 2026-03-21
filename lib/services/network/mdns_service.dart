@@ -43,7 +43,7 @@ class MdnsService {
       );
 
       _broadcast = BonsoirBroadcast(service: service);
-      await _broadcast!.ready;
+      // await _broadcast!.ready; // Not available in Bonsoir 6.0+
       await _broadcast!.start();
 
       debugPrint('[mDNS] Broadcasting: ${service.name} on port ${service.port}');
@@ -70,7 +70,7 @@ class MdnsService {
 
     try {
       _discovery = BonsoirDiscovery(type: AppConstants.serviceType);
-      await _discovery!.ready;
+      // await _discovery!.ready; // Not available in Bonsoir 6.0+
 
       _discovery!.eventStream!.listen(_handleDiscoveryEvent);
       await _discovery!.start();
