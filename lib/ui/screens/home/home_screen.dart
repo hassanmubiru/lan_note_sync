@@ -93,6 +93,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                   ),
                 ),
               ),
+              SliverAppBar(
+                expandedHeight: 80,
+                floating: false,
+                pinned: false,
+                backgroundColor: theme.colorScheme.surface,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
+                ),
+              ),
             ],
             body: Column(
               children: [
