@@ -103,20 +103,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 toolbarHeight: 0,
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(44),
-                  child: Container(
-                    color: theme.colorScheme.surface,
-                    child: TabBar(
-                      isScrollable: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      controller: _tabController,
-                      tabs: [
-                        Tab(child: _TabLabel(Icons.note_alt_outlined, AppStrings.myNotes,
-                            _countBadge(ref, notes: true))),
-                        Tab(child: _TabLabel(Icons.wifi_tethering_rounded, AppStrings.nearby,
-                            _countBadge(ref, notes: false))),
-                        Tab(child: _TabLabel(Icons.meeting_room_outlined, AppStrings.rooms,
-                            roomState.currentRoom != null ? '🟢' : null)),
-                      ],
+                  child: ClipRect(
+                    child: Container(
+                      color: theme.colorScheme.surface,
+                      child: TabBar(
+                        isScrollable: true,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        controller: _tabController,
+                        tabs: [
+                          Tab(child: _TabLabel(Icons.note_alt_outlined, AppStrings.myNotes,
+                              _countBadge(ref, notes: true))),
+                          Tab(child: _TabLabel(Icons.wifi_tethering_rounded, AppStrings.nearby,
+                              _countBadge(ref, notes: false))),
+                          Tab(child: _TabLabel(Icons.meeting_room_outlined, AppStrings.rooms,
+                              roomState.currentRoom != null ? '🟢' : null)),
+                        ],
+                      ),
                     ),
                   ),
                 ),
