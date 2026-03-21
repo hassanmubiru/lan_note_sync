@@ -76,9 +76,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                   IconButton(icon: const Icon(Icons.settings_outlined), onPressed: () => context.push('/settings')),
                 ],
               ),
-              SliverToBoxAdapter(
-                child: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
-              ),
               SliverAppBar(
                 floating: true,
                 snap: true,
