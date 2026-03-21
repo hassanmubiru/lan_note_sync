@@ -58,11 +58,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 floating: true,
                 snap: true,
                 expandedHeight: 100,
+                leading: const SizedBox.shrink(),
                 centerTitle: false,
-                automaticallyImplyLeading: false,
-                leadingWidth: 0,
                 titleSpacing: 16,
-                toolbarHeight: 56,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
