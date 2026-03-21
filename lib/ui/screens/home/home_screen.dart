@@ -107,7 +107,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                     color: theme.colorScheme.surface,
                     child: TabBar(
                       isScrollable: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       controller: _tabController,
                       tabs: [
                         Tab(child: _TabLabel(Icons.note_alt_outlined, AppStrings.myNotes,
@@ -124,7 +124,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             ],
             body: Column(
               children: [
-                const SecurityBadgeRow(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: const SecurityBadgeRow(),
+                ),
                 if (syncState.status != SyncStatus.idle) SyncStatusBar(syncState: syncState),
                 if (_currentTab == 1)
                   ShakeBanner(onShake: () => _onShake(context, ref), peerCount: peers.length),
