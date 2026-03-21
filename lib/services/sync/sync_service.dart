@@ -218,7 +218,8 @@ class SyncService {
     List<Note> notes,
   ) async {
     try {
-      await webRtcService?.sendNotesToPeer(peer.id, notes);
+      // WebRTC sync not yet implemented in this version
+      // await webRtcService?.sendNotesToPeer(peer.id, notes);
       return SyncOutcome(result: SyncResult.success, notesSent: notes.length);
     } catch (e) {
       return SyncOutcome(result: SyncResult.failed, error: e.toString());
