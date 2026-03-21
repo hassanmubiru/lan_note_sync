@@ -106,6 +106,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                   child: Container(
                     color: theme.colorScheme.surface,
                     child: TabBar(
+                      isScrollable: true,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       controller: _tabController,
                       tabs: [
                         Tab(child: _TabLabel(Icons.note_alt_outlined, AppStrings.myNotes,
