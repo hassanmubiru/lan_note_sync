@@ -124,9 +124,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             ],
             body: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: const SecurityBadgeRow(),
+                ClipRect(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: const SecurityBadgeRow(),
+                  ),
                 ),
                 if (syncState.status != SyncStatus.idle) SyncStatusBar(syncState: syncState),
                 if (_currentTab == 1)
