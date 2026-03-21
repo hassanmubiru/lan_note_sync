@@ -7,7 +7,7 @@ import '../../models/note.dart';
 import '../../models/peer.dart';
 import '../../services/storage/hive_service.dart';
 import '../../services/device_service.dart';
-import '../../services/network/webrtc_service.dart';
+import '../../services/webrtc_service.dart';
 import '../../services/network/http_server_service.dart';
 
 enum SyncResult { success, partial, conflict, failed }
@@ -34,7 +34,7 @@ class SyncOutcome {
 
 class SyncService {
   final HttpServerService? httpServer;
-  final WebRtcService? webRtcService;
+  final WebRTCService? webRtcService;
 
   SyncService({this.httpServer, this.webRtcService});
 

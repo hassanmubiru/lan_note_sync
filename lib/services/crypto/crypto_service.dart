@@ -41,18 +41,19 @@ class CryptoService {
   }
 
   static String _publicKeyToBase64(RSAPublicKey key) {
-    final encoded = ASN1Sequence(elements: [
-      ASN1Integer(key.modulus!),
-      ASN1Integer(key.exponent!),
-    ]);
-    return base64Encode(encoded.encode());
+    // Encode modulus and exponent as hex strings for simplicity
+    final modulusHex = key.modulus.toString();
+    final exponentHex = key.exponent.toString();
+    final encoded = '$modulusHex:$exponentHex';
+    return base64Encode(utf8.encode(encoded));
   }
 
   static RSAPublicKey _publicKeyFromBase64(String base64Str) {
-    final bytes = base64Decode(base64Str);
-    final asn1 = ASN1Parser(bytes).nextObject() as ASN1Sequence;
-    final modulus = (asn1.elements![0] as ASN1Integer).integer!;
-    final exponent = (asn1.elements![1] as ASN1Integer).integer!;
+    final decoded = utf8.decode(base64Decode(base64Str));
+    final parts = decoded.split(':');
+    if (parts.length != 2) throw Exception('Invalid key format');
+    final modulus = BigInt.parse(parts[0]);
+    final exponent = BigInt.parse(parts[1]);
     return RSAPublicKey(modulus, exponent);
   }
 
