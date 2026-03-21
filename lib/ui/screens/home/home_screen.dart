@@ -61,11 +61,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 leading: const SizedBox.shrink(),
                 centerTitle: false,
                 titleSpacing: 16,
-                flexibleSpace: FlexibleSpaceBar(
+                flexibleSpace: !innerBoxScrolled ? FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
-                ),
-                title: innerBoxScrolled ? const Text(
+                ) : null,
+                title: const Text(
                   'LanNote Sync',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
@@ -73,7 +73,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                     color: AppColors.primary,
                   ),
                   overflow: TextOverflow.ellipsis,
-                ) : null,
+                ),
                 actions: [
                   IconButton(icon: const Icon(Icons.nfc_rounded), tooltip: 'NFC', onPressed: () => _showNfcSheet(context)),
                   IconButton(icon: const Icon(Icons.document_scanner_outlined), tooltip: 'AR', onPressed: () => context.push('/ar')),
