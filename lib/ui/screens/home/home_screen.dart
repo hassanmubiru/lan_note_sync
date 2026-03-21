@@ -60,6 +60,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 expandedHeight: 100,
                 centerTitle: false,
                 automaticallyImplyLeading: false,
+                leadingWidth: 0,
+                titleSpacing: 16,
                 toolbarHeight: 56,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
