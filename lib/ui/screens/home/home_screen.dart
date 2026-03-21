@@ -106,7 +106,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             ],
             body: Column(
               children: [
-                _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
                 const SecurityBadgeRow(),
                 if (syncState.status != SyncStatus.idle) SyncStatusBar(syncState: syncState),
                 if (_currentTab == 1)
