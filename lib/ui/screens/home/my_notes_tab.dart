@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
 import '../../../models/note.dart';
+import '../../../models/peer.dart';
 import '../../../providers/notes_provider.dart';
 import '../../../providers/peers_provider.dart';
 import '../../widgets/empty_state.dart';
