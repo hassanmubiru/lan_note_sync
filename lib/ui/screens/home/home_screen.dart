@@ -58,26 +58,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 floating: true,
                 snap: true,
                 expandedHeight: 100,
+                centerTitle: false,
+                titleSpacing: 0,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: _HeroHeader(peerCount: peers.length, roomSsid: roomState.currentRoom?.displayName),
                 ),
                 title: innerBoxScrolled
-                    ? Expanded(
-                        child: Row(
-                          children: [
-                            Container(width: 26, height: 26,
-                              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(6)),
-                              child: const Icon(Icons.sync_alt, color: Colors.white, size: 14)),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Text(AppStrings.appName, style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.w700, color: AppColors.primary),
-                                overflow: TextOverflow.ellipsis),
-                            ),
-                          ],
-                        ),
-                      )
+                    ? Text(AppStrings.appName, style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700, color: AppColors.primary),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1)
                     : null,
                 actions: [
                   IconButton(icon: const Icon(Icons.nfc_rounded), tooltip: 'NFC', onPressed: () => _showNfcSheet(context)),
