@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "deploy": "firebase deploy --only hosting",
+    "deploy:preview": "firebase hosting:channel:deploy preview"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.35.1"
+  }
+}
