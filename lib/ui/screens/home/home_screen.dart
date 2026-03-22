@@ -98,11 +98,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
               SliverAppBar(
                 floating: true,
                 snap: true,
-                expandedHeight: 44,
+                expandedHeight: 48,
                 backgroundColor: theme.colorScheme.surface,
                 toolbarHeight: 0,
                 bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(44),
+                  preferredSize: const Size.fromHeight(48),
                   child: ClipRect(
                     child: Container(
                       color: theme.colorScheme.surface,
