@@ -57,81 +57,80 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
               SliverAppBar(
                 floating: true,
                 snap: true,
-                expandedHeight: 40,
-                toolbarHeight: 40,
+                toolbarHeight: 48,
+                scrolledUnderElevation: 1,
                 leading: const SizedBox.shrink(),
                 leadingWidth: 0,
                 centerTitle: false,
-                titleSpacing: 8,
+                titleSpacing: 12,
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(3),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: const Icon(Icons.note_alt_rounded, color: Colors.white, size: 14),
                     ),
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: Text(
-                        'LanNote Sync',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: AppColors.primary,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                    const SizedBox(width: 8),
+                    Text(
+                      'LanNote Sync',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17,
+                        color: AppColors.primary,
                       ),
                     ),
                   ],
                 ),
                 actions: [
-                  IconButton(icon: const Icon(Icons.nfc_rounded), tooltip: 'NFC', onPressed: () => _showNfcSheet(context)),
-                  IconButton(icon: const Icon(Icons.document_scanner_outlined), tooltip: 'AR', onPressed: () => context.push('/ar')),
-                  IconButton(icon: const Icon(Icons.settings_outlined), onPressed: () => context.push('/settings')),
+                  IconButton(
+                    icon: const Icon(Icons.nfc_rounded),
+                    tooltip: 'NFC Tap-to-Share',
+                    onPressed: () => _showNfcSheet(context),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.document_scanner_outlined),
+                    tooltip: 'AR Capture',
+                    onPressed: () => context.push('/ar'),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.settings_outlined),
+                    tooltip: 'Settings',
+                    onPressed: () => context.push('/settings'),
+                  ),
                 ],
-              ),
-              SliverAppBar(
-                floating: true,
-                snap: true,
-                expandedHeight: 48,
-                backgroundColor: theme.colorScheme.surface,
-                toolbarHeight: 0,
                 bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(48),
-                  child: ClipRect(
-                    child: Container(
-                      color: theme.colorScheme.surface,
-                      child: TabBar(
-                        isScrollable: true,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        controller: _tabController,
-                        tabs: [
-                          Tab(child: _TabLabel(Icons.note_alt_outlined, AppStrings.myNotes,
-                              _countBadge(ref, notes: true))),
-                          Tab(child: _TabLabel(Icons.wifi_tethering_rounded, AppStrings.nearby,
-                              _countBadge(ref, notes: false))),
-                          Tab(child: _TabLabel(Icons.meeting_room_outlined, AppStrings.rooms,
-                              roomState.currentRoom != null ? '🟢' : null)),
-                        ],
-                      ),
-                    ),
+                  preferredSize: const Size.fromHeight(46),
+                  child: TabBar(
+                    controller: _tabController,
+                    isScrollable: true,
+                    tabAlignment: TabAlignment.start,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    dividerColor: Colors.transparent,
+                    tabs: [
+                      Tab(child: _TabLabel(
+                        Icons.note_alt_outlined, AppStrings.myNotes,
+                        _countBadge(ref, notes: true),
+                      )),
+                      Tab(child: _TabLabel(
+                        Icons.wifi_tethering_rounded, AppStrings.nearby,
+                        _countBadge(ref, notes: false),
+                      )),
+                      Tab(child: _TabLabel(
+                        Icons.meeting_room_outlined, AppStrings.rooms, null,
+                        isLive: roomState.currentRoom != null,
+                      )),
+                    ],
                   ),
                 ),
               ),
             ],
             body: Column(
               children: [
-                ClipRect(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: const SecurityBadgeRow(),
-                  ),
-                ),
+                const SecurityBadgeRow(),
                 if (syncState.status != SyncStatus.idle) SyncStatusBar(syncState: syncState),
                 if (_currentTab == 1)
                   ShakeBanner(onShake: () => _onShake(context, ref), peerCount: peers.length),
@@ -223,7 +222,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
     } else {
       ref.read(peersProvider.notifier).refresh();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Scanning for nearby devices… 👀')),
+        const SnackBar(content: Text('Scanning for nearby devices…')),
       );
     }
   }
@@ -244,8 +243,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             Text('Share All Notes', style: Theme.of(ctx).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
             const SizedBox(height: 16),
             ...peers.map((p) => ListTile(
-              leading: CircleAvatar(backgroundColor: p.avatarColor,
-                child: Text(p.initials, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+              leading: CircleAvatar(
+                backgroundColor: p.avatarColor,
+                child: Text(p.initials, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
               title: Text(p.name),
               subtitle: Text('${p.noteCount} notes'),
               trailing: const Icon(Icons.chevron_right),
@@ -261,81 +262,40 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
   }
 }
 
-class _HeroHeader extends StatelessWidget {
-  final int peerCount;
-  final String? roomSsid;
-  const _HeroHeader({required this.peerCount, this.roomSsid});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft, end: Alignment.bottomRight,
-          colors: [AppColors.primary.withOpacity(isDark ? 0.25 : 0.12), AppColors.secondary.withOpacity(0.05)],
-        ),
-      ),
-      padding: const EdgeInsets.fromLTRB(16, 56, 16, 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(children: [
-            Container(width: 30, height: 30,
-              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(7)),
-              child: const Icon(Icons.sync_alt, color: Colors.white, size: 16)),
-            const SizedBox(width: 8),
-            Text(AppStrings.appName, style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w800, color: AppColors.primary)),
-          ]),
-          const SizedBox(height: 4),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(children: [
-              _Pill('🔒 E2EE', AppColors.primary),
-              const SizedBox(width: 6),
-              _Pill('📴 Offline-First', AppColors.success),
-              if (peerCount > 0) ...[const SizedBox(width: 6), _Pill('🚀 $peerCount nearby', AppColors.secondary)],
-              if (roomSsid != null) ...[const SizedBox(width: 6), _Pill('🏢 $roomSsid', AppColors.tertiary)],
-            ]),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Pill extends StatelessWidget {
-  final String l; final Color c;
-  const _Pill(this.l, this.c);
-  @override
-  Widget build(_) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-    decoration: BoxDecoration(color: c.withOpacity(0.12), borderRadius: BorderRadius.circular(20), border: Border.all(color: c.withOpacity(0.3))),
-    child: Text(l, style: TextStyle(fontSize: 10, color: c, fontWeight: FontWeight.w600)),
-  );
-}
-
 class _TabLabel extends StatelessWidget {
-  final IconData icon; final String label; final String? badge;
-  const _TabLabel(this.icon, this.label, this.badge);
+  final IconData icon;
+  final String label;
+  final String? badge;
+  final bool isLive;
+
+  const _TabLabel(this.icon, this.label, this.badge, {this.isLive = false});
+
   @override
   Widget build(BuildContext context) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      Icon(icon, size: 15),
-      const SizedBox(width: 4),
-      Flexible(
-        child: Text(label, style: const TextStyle(fontSize: 12), overflow: TextOverflow.ellipsis),
-      ),
+      Icon(icon, size: 16),
+      const SizedBox(width: 5),
+      Text(label, style: const TextStyle(fontSize: 13)),
       if (badge != null) ...[
-        const SizedBox(width: 4),
+        const SizedBox(width: 5),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-          decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.12), borderRadius: BorderRadius.circular(8)),
-          child: Text(badge!, style: const TextStyle(fontSize: 10, color: AppColors.primary, fontWeight: FontWeight.w700)),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withOpacity(0.12),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            badge!,
+            style: const TextStyle(fontSize: 10, color: AppColors.primary, fontWeight: FontWeight.w700),
+          ),
+        ),
+      ],
+      if (isLive) ...[
+        const SizedBox(width: 5),
+        Container(
+          width: 6, height: 6,
+          decoration: const BoxDecoration(color: AppColors.success, shape: BoxShape.circle),
         ),
       ],
     ],
@@ -345,43 +305,74 @@ class _TabLabel extends StatelessWidget {
 class _RoomJoinedBanner extends StatelessWidget {
   final String room;
   const _RoomJoinedBanner({required this.room});
+
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     color: AppColors.success.withOpacity(0.1),
     child: Row(children: [
-      Container(width: 8, height: 8, decoration: const BoxDecoration(color: AppColors.success, shape: BoxShape.circle)),
+      Container(
+        width: 8, height: 8,
+        decoration: const BoxDecoration(color: AppColors.success, shape: BoxShape.circle),
+      ),
       const SizedBox(width: 8),
-      Text('${AppStrings.roomAutoJoined}: $room',
-          style: const TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.w600)),
+      Text(
+        '${AppStrings.roomAutoJoined}: $room',
+        style: const TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.w600),
+      ),
     ]),
   );
 }
 
 class _NfcSheet extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(24),
-    child: Column(mainAxisSize: MainAxisSize.min, children: [
-      const Text('📲', style: TextStyle(fontSize: 48)),
-      const SizedBox(height: 12),
-      Text('NFC Tap-to-Share', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
-      const SizedBox(height: 8),
-      const Text(AppStrings.viral_nfc, textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.grey, height: 1.4)),
-      const SizedBox(height: 20),
-      SizedBox(width: double.infinity,
-        child: ElevatedButton.icon(
-          onPressed: () {
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Hold phones back-to-back…')));
-          },
-          icon: const Icon(Icons.nfc_rounded),
-          label: const Text('Start NFC Handshake'),
-        )),
-      const SizedBox(height: 8),
-      TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-    ]),
-  );
+  Widget build(BuildContext context) {
+    final bottom = MediaQuery.of(context).padding.bottom;
+    return Padding(
+      padding: EdgeInsets.fromLTRB(24, 28, 24, bottom + 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 68, height: 68,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.nfc_rounded, size: 32, color: AppColors.primary),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'NFC Tap-to-Share',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            AppStrings.viral_nfc,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.grey, height: 1.5),
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Hold phones back-to-back…')),
+                );
+              },
+              icon: const Icon(Icons.nfc_rounded),
+              label: const Text('Start NFC Handshake'),
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
 }
